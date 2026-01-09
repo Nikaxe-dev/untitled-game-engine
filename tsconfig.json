@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "outDir": "./build",
+      "rootDir": "./src",
+      "module": "ESNext",
+      "target": "ESNext",
+      "moduleResolution": "Node",
+      "strict": true,
+      "esModuleInterop": true,
+      "removeComments": true,
+
+      "baseUrl": ".",
+      "paths": {
+        "@engine": ["src/engine/index.ts"],
+        "@engine/*": ["src/engine/*"]
+      }
+    },
+    "include": ["src/**/*"]
+}

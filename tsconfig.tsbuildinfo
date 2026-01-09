@@ -1,0 +1,1 @@
+{"root":["./src/engine/index.ts","./src/engine/datatype/color.ts","./src/engine/datatype/vector2.ts","./src/engine/instance/base/instance.ts","./src/engine/instance/base/service.ts","./src/engine/instance/physical/point.ts","./src/engine/instance/service/game.ts","./src/tests/test.ts"],"version":"5.8.3"}
