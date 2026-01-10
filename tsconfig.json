@@ -7,13 +7,10 @@
       "moduleResolution": "Node",
       "strict": true,
       "esModuleInterop": true,
-      "removeComments": true,
+      "removeComments": false,
 
       "baseUrl": ".",
-      "paths": {
-        "@engine": ["src/engine/index.ts"],
-        "@engine/*": ["src/engine/*"]
-      }
+      "allowJs": true
     },
     "include": ["src/**/*"]
 }

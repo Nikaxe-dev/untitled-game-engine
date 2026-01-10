@@ -1,8 +1,10 @@
-import Vector2 from "@engine/datatype/Vector2";
-import Instance from "../base/Instance";
+import Vector2 from "../../datatype/Vector2.js";
+import Instance from "../base/Instance.js";
+import Game from "../service/Game.js";
+import Scene from "./Scene.js";
 
 /**
- * A Point in 2D Space.
+ * A Point in 2D Space with a Position and Velocity.
  * Used as the base for all 2D Instances.
  * 
  * @extends Instance
@@ -13,5 +15,20 @@ export default class Point extends Instance {
      * 
      * @public
      */
-    public Position: Vector2 = new Vector2(0);
+    public position: Vector2 = Vector2.ZERO;
+
+    /**
+     * The amount added to the Position each frame.
+     * @public
+     */
+    public velocity: Vector2 = Vector2.ZERO;
+
+    public simulate(game: Game, scene: Scene): void {
+        super.simulate(game, scene);
+        this.position.add(this.velocity.multiply(new Vector2(this.simulationUseDeltatime ? game.deltaTime : 1)).multiply(new Vector2(this.simulationUseSimulationSpeed ? game.simulationSpeed : 1)));
+    }
+
+    constructor() {
+        super();
+    }
 }

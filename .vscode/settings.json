@@ -1,2 +1,6 @@
 {
+  "typescript.preferences.importModuleSpecifierFormat": "relative",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifierFormat": "relative",
+  "javascript.preferences.importModuleSpecifier": "relative"
 }

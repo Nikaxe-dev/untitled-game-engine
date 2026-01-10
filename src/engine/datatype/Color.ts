@@ -2,6 +2,12 @@
  * A color, internally stored in RGBA.
  */
 export default class Color {
+    public static readonly WHITE = new Color(255,255,255);
+    public static readonly BLACK = new Color(0,0,0);
+    public static readonly RED = new Color(255,0,0);
+    public static readonly GREEN = new Color(0,255,0);
+    public static readonly BLUE = new Color(0,0,255);
+
     public r: number = 0;
     public g: number = 0;
     public b: number = 0;
@@ -29,13 +35,13 @@ export default class Color {
      * @returns Color
      * @public
      */
-    public fromHex(hexCode: string = "#ff0000"): Color {
+    public static fromHex(hexCode: string = "#ff0000"): Color {
         const hexValue = hexCode.replace("#", "");
         const num = parseInt(hexValue, 16);
-        this.r = (num >> 16) & 255;
-        this.g = (num >> 8) & 255;
-        this.b = num & 255;
-        this.a = 255;
-        return this;
+        const r = (num >> 16) & 255;
+        const g = (num >> 8) & 255;
+        const b = num & 255;
+        const a = 255;
+        return new Color(r,g,b,a);
     }
 }

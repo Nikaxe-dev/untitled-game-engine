@@ -1,4 +1,4 @@
-import Game from "./instance/service/game";
+import Game from "./instance/service/Game.js";
 
 /**
  * The main engine class, storing public properties accessible from everywhere, along with certain other classes in the framework.

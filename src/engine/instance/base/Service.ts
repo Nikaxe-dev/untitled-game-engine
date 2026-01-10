@@ -1,5 +1,5 @@
-import Game from "@engine/instance/service/game";
-import Instance from "./Instance";
+import Game from "../service/Game.js";
+import Instance from "./Instance.js";
 
 /**
  * Service class, used for services.
@@ -12,8 +12,11 @@ export default class Service extends Instance {
         this.setParent(newParent);
     }
 
+    /**
+     * @readonly is a service
+     */
     get parent() {
-        return super.parent
+        return super.parent;
     }
 
     /**
@@ -21,6 +24,7 @@ export default class Service extends Instance {
      */
     constructor(game: Game | null) {
         super();
+        console.log(`INITIALIZING SERVICE ${this.className}${game ? ` in ${game.name}` : ''}`);
         this.parent = game;
     }
 }

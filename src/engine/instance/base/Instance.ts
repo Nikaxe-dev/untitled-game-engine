@@ -1,3 +1,7 @@
+import Hook from "../../datatype/Hook.js";
+import Scene from "../physical/Scene.js";
+import Game from "../service/Game.js";
+
 export default class Instance {
     /**
      * Your code editor couldnt find this, assume it is an Instance.
@@ -12,11 +16,47 @@ export default class Instance {
     public readonly className: string;
 
     /**
+     * Controls the order the Instance is simulated in. Filtered by descendants of the scene.
+     */
+    public simOrder: number = 0;
+
+    /**
      * Protected _parent, only accesible in Instance classes.
      * @protected
      */
     protected _parent: Instance | null = null;
+
+    /**
+     * Fires every frame if the instance is under a scene (which is under the Workspace).
+     * @param Game The game instance
+     * @param Scene The scene the instance is under
+     */
+    public simulated = new Hook;
+
+    /**
+     * Controls whether the built in simulate functions use game.deltaTime in their speed calculations.
+     */
+    public simulationUseDeltatime: boolean = true;
+
+    /**
+     * Controls whether the built in simulate functions use game.simulationSpeed in their speed calculations.
+     */
+    public simulationUseSimulationSpeed: boolean = true;
+
+    /**
+     * Simulates the Instance.
+     * @param game The game the Instance is located under.
+     * @param scene The scene the Instance is located under.
+     */
+    public simulate(game: Game, scene: Scene) {
+        
+    }
     
+    /**
+     * The Instances Parent, which is where it is located under in the Instance tree.
+     * When the Parent is null, assume it has none.
+     * @public
+     */
     public get parent() {
         return this._parent;
     }
@@ -107,6 +147,38 @@ export default class Instance {
      */
     public getChildren(): Instance[] {
         return this.children;
+    }
+
+    /**
+     * Returns an array of the descendants of the Instance.
+     * @returns Instance[]
+     * @public
+     */
+    public getDescendants(): Instance[] {
+        const res: Instance[] = [];
+
+        this.children.forEach((child, index) => {
+            res.push(child);
+            if(child.children.length > 0) child.getDescendants().forEach(c => res.push(c));
+        })
+
+        return res;
+    }
+
+    /**
+     * Gets the ancestry of the Instance.
+     * @returns Instance[]
+     */
+    public getAncestry(): Instance[] {
+        const res: Instance[] = [];
+        let current: Instance = this;
+
+        while(current.parent != null) {
+            current = current.parent;
+            res.push(current);
+        }
+
+        return res;
     }
 
     /**
