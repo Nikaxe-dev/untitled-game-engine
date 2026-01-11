@@ -83,10 +83,9 @@ export default class Instance {
         // Push Instance into new Parent and declare getter for the Instances name.
         if(newParent) {
             newParent.children.push(this);
+            const me = this;
             Object.defineProperty(newParent, this.name, {
-                get() {
-                    return this;
-                },
+                get() {return me;},
                 configurable: true,
             });
         }
@@ -115,8 +114,9 @@ export default class Instance {
         this._name = newName;
         if(this.parent) {
             delete (this.parent as any)[oldName];
+            const me = this
             Object.defineProperty(this.parent, newName, {
-                get() {return this;},
+                get() {return me;},
                 configurable: true,
             })
         }

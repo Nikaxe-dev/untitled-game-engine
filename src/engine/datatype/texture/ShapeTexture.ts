@@ -1,4 +1,5 @@
 import { SHAPE } from "../../Enum.js";
+import Shader from "../../shaders/Shader.js";
 import Color from "../Color.js";
 import Texture from "./Texture.js";
 
@@ -16,8 +17,8 @@ export default class ShapeTexture extends Texture {
      */
     public color: Color;
 
-    constructor(shapeType: SHAPE = SHAPE.RECTANGLE, color: Color = Color.WHITE) {
-        super();
+    constructor(shapeType: SHAPE = SHAPE.RECTANGLE, color: Color = Color.WHITE, shader: typeof Shader = Shader) {
+        super(shader);
         this.shapeType = shapeType;
         this.color = color;
     }

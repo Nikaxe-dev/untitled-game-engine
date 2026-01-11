@@ -10,7 +10,8 @@
       "removeComments": false,
 
       "baseUrl": ".",
-      "allowJs": true
+      "allowJs": true,
+      "allowUmdGlobalAccess": true
     },
     "include": ["src/**/*"]
 }

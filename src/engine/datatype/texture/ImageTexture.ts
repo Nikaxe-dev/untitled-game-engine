@@ -1,3 +1,4 @@
+import Shader from "../../shaders/Shader.js";
 import Color from "../Color.js";
 import Texture from "./Texture.js";
 
@@ -16,9 +17,10 @@ export default class ImageTexture extends Texture {
      */
     public tintColor: Color;
 
-    constructor(imageURL: string, tintColor: Color = Color.WHITE) {
-        super();
+    constructor(imageURL: string, tintColor: Color = Color.WHITE, shader: typeof Shader = Shader) {
+        super(shader);
         this.tintColor = tintColor;
         this.imageURL = imageURL;
+        this.shader = shader;
     }
 }

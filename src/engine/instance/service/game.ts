@@ -1,5 +1,6 @@
 import Color from "../../datatype/Color.js";
 import Hook from "../../datatype/Hook.js";
+import { GAMESTOPREASON } from "../../Enum.js";
 import engine from "../../main.js";
 import Service from "../base/Service.js";
 import GameObject from "../physical/GameObject.js";
@@ -38,7 +39,7 @@ export default class Game extends Service {
     /**
      * The max framerate for the game.
      */
-    public maxFramerate: number = 60;
+    public maxSimulationFramerate: number = 60;
 
     /**
      * The speed that simulations (player, npc, physics, ect) should run at.
@@ -58,14 +59,14 @@ export default class Game extends Service {
      * The time the game took to simulate the last frame. Use it to achieve frame-independant speeds.
      * @public
      */
-    public deltaTime: number = 1/this.maxFramerate;
+    public deltaTime: number = 1/this.maxSimulationFramerate;
 
     /**
      * Gets fired every time a the entire game is simulated.
      * @param sceneOrder The order of scenes being simulated.
      * @public
      */
-    public gameSimulated = new Hook();
+    public readonly gameSimulated = new Hook();
 
     public backgroundColor = new Color(0,0,0,1)
 
@@ -77,13 +78,18 @@ export default class Game extends Service {
         return (this.Workspace.getChildren().filter(c => c instanceof Scene) as Scene[]).sort((a, b) => a.layer - b.layer);
     }
 
+    private lastSimulateTime = performance.now();
+
     /**
-     * Runs simulate on every simulatable Instance.
+     * Runs simulate on every simulatable Instance. Calling this starts a loop.
      * @public
      * @async
      */
     public async simulate() {
-        const frameStartTime = new Date();
+        const frameStartTime = performance.now();
+
+        this.deltaTime = (frameStartTime - this.lastSimulateTime) / 1000;
+        this.lastSimulateTime = frameStartTime;
 
         const sceneOrder = this.getSceneOrder();
         sceneOrder.forEach((scene, index) => {
@@ -93,16 +99,22 @@ export default class Game extends Service {
                 instance.simulated.fire(this, scene);
             })
         })
-        this.frameExecuted.fire(sceneOrder);
+        this.gameSimulated.fire(sceneOrder);
 
-        const frameExecutionMilliseconds = new Date().getTime() - frameStartTime.getTime();
+        aaaa // TODO: FIX TIMING ISSUES
+
+        const frameExecutionMilliseconds = performance.now() - frameStartTime;
+
+        console.log(frameExecutionMilliseconds)
         
-        if(frameExecutionMilliseconds < 1000/this.maxFramerate) {
-            await new Promise(resolve => setTimeout(resolve, 1000/this.maxFramerate-frameExecutionMilliseconds))
+        if(frameExecutionMilliseconds < 1000/this.maxSimulationFramerate) {
+            console.log(1000/this.maxSimulationFramerate-frameExecutionMilliseconds)
+            await new Promise(resolve => setTimeout(resolve, 1000/this.maxSimulationFramerate-frameExecutionMilliseconds))
         }
-
-        this.deltaTime = new Date().getTime() - frameStartTime.getTime();
+        this.simulate();
     }
+
+    public simulateLoopID?: number;
 
     /**
      * Starts all of the processes for the game.
@@ -110,13 +122,17 @@ export default class Game extends Service {
      * @public
      */
     public startGame() {
-        setInterval(() => this.simulate(), 0);
+        this.simulate();
+        this.RenderService.startRenderLoop();
+    }
 
-        const animationFrameCallback = () => {
-            this.RenderService.render()
-            animationFrameCallback()
-        }
-        requestAnimationFrame(animationFrameCallback)
+    /**
+     * Ends the main game loop.
+     * @param reason The reason the game was stopped.
+     */
+    public endGame(reason: GAMESTOPREASON) {
+        clearInterval(this.simulateLoopID);
+        console.log(`GAMELOOP STOPPED. CODE: ${reason}`);
     }
 
     /**
@@ -130,7 +146,6 @@ export default class Game extends Service {
             const mainScene = new Scene(this.Workspace);
             mainScene.name = "Main";
         }
-        if(this.RenderService.automaticallyAdjustScreenSize) this.RenderService.setScreenSizeAutomatic();
 
         console.log(`Hello from ${engine.NAME} V${engine.VERSION}!`);
     }
