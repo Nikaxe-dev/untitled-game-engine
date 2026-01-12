@@ -9,57 +9,20 @@ import GameObject from "../physical/GameObject.js";
 import Scene from "../physical/Scene.js";
 import Game from "./Game.js";
 
-interface REGLCancellable {
-    cancel(): void;
-}
-
 /**
  * The RenderService, which controls rendering for the game.
  */
 export default class RenderService extends Service {
     /**
      * The size of the page in your browser.
-     * @protected
-     */
-    protected _screenSize: Vector2 = new Vector2(100);
-
-    /**
-     * The size of the page in your browser.
      * @public
      */
-    public get screenSize() {
-        return this._screenSize;
-    }
-
-    public set screenSize(newSize: Vector2) {
-        this._screenSize = newSize;
-        this.applyScreenSize();
-    }
+    public screenSize: Vector2 = new Vector2(100);
 
     /**
      * Controls whether the game automatically sets the screenSize to (window.screen.width, window.screen.height).
      */
     public automaticallyAdjustScreenSize: boolean = true;
-
-    /**
-     * Sets the screen size based on the pages current size.
-     * @public
-     */
-    public setScreenSizeAutomatic() {
-        this.screenSize.x = window.innerWidth;
-        this.screenSize.y = window.innerHeight;
-        this.applyScreenSize();
-    }
-    
-    /**
-     * Applies the screen size to each scene Instance.
-     * @public
-     */
-    public applyScreenSize() {
-        const game: Game = this.parent as Game;
-        this.canvas.width = this.screenSize.x;
-        this.canvas.height = this.screenSize.y;
-    }
 
     private getRenderableDescendants(container: Scene) {
         return (container.getDescendants().filter(c => c instanceof GameObject && c.sprite.visible) as GameObject[]).sort((a, b) => a.sprite.zIndex - b.sprite.zIndex);
@@ -144,7 +107,11 @@ export default class RenderService extends Service {
                         [1,1],
                         [0,1],
                         [0,0]
-                    ])
+                    ]),
+
+                    vertexIndex: [
+                        1.0,2.0,3.0,4.0,5.0,6.0
+                    ]
                 },
 
                 uniforms: this.shaderUniforms,
@@ -169,20 +136,6 @@ export default class RenderService extends Service {
      * @readonly
      */
     public readonly canvasContext;
-
-    /**
-     * The [REGL](https://github.com/regl-project/regl/tree/main) rendering loop.
-     * @public
-     * @readonly
-     */
-    public reglRenderLoop?: REGLCancellable;
-
-    /**
-     * Starts the REGL rendering loop.
-     */
-    public startRenderLoop() {
-        this.reglRenderLoop = this.canvasContext.frame(() => this.render());
-    }
 
     public shaderUniforms;
 

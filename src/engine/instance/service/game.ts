@@ -3,10 +3,13 @@ import Hook from "../../datatype/Hook.js";
 import { GAMESTOPREASON } from "../../Enum.js";
 import engine from "../../main.js";
 import Service from "../base/Service.js";
-import GameObject from "../physical/GameObject.js";
 import Scene from "../physical/Scene.js";
 import RenderService from "./RenderService.js";
 import Workspace from "./Workspace.js";
+
+interface REGLCancellable {
+    cancel(): void;
+}
 
 /**
  * The Game, including every service and game-specific property.
@@ -56,10 +59,16 @@ export default class Game extends Service {
     public uiSpeed: number = 1;
 
     /**
-     * The time the game took to simulate the last frame. Use it to achieve frame-independant speeds.
+     * The time the game took to execute the last frame. Usually, this does not include simulation, so do not use it in simulation code, instead use game.simulationDeltaTime.
      * @public
      */
-    public deltaTime: number = 1/this.maxSimulationFramerate;
+    public deltaTime: number = 0;
+
+    /**
+     * The time the game took to execute the last simulation. Do NOT use this for rendering code, this is for simulation and simulation only.
+     */
+    public simulationDeltaTime: number = 1/this.maxSimulationFramerate;
+    
 
     /**
      * Gets fired every time a the entire game is simulated.
@@ -78,43 +87,30 @@ export default class Game extends Service {
         return (this.Workspace.getChildren().filter(c => c instanceof Scene) as Scene[]).sort((a, b) => a.layer - b.layer);
     }
 
-    private lastSimulateTime = performance.now();
-
     /**
-     * Runs simulate on every simulatable Instance. Calling this starts a loop.
+     * Runs simulate on every simulatable Instance.
      * @public
      * @async
      */
     public async simulate() {
-        const frameStartTime = performance.now();
-
-        this.deltaTime = (frameStartTime - this.lastSimulateTime) / 1000;
-        this.lastSimulateTime = frameStartTime;
-
         const sceneOrder = this.getSceneOrder();
         sceneOrder.forEach((scene, index) => {
             const simulatable = this.getSimulatableDescendants(scene);
             simulatable.forEach((instance, index) => {
+                instance.preSimulation(this, scene);
+            });
+            simulatable.forEach((instance, index) => {
                 instance.simulate(this, scene);
                 instance.simulated.fire(this, scene);
-            })
+            });
         })
         this.gameSimulated.fire(sceneOrder);
-
-        aaaa // TODO: FIX TIMING ISSUES
-
-        const frameExecutionMilliseconds = performance.now() - frameStartTime;
-
-        console.log(frameExecutionMilliseconds)
-        
-        if(frameExecutionMilliseconds < 1000/this.maxSimulationFramerate) {
-            console.log(1000/this.maxSimulationFramerate-frameExecutionMilliseconds)
-            await new Promise(resolve => setTimeout(resolve, 1000/this.maxSimulationFramerate-frameExecutionMilliseconds))
-        }
-        this.simulate();
     }
 
-    public simulateLoopID?: number;
+    private lastFrameTime: number = performance.now();
+    public lastSimulationTime: number = performance.now();
+    public simulationAccumulator: number = 0;
+    private documentHidden: boolean = false;
 
     /**
      * Starts all of the processes for the game.
@@ -122,8 +118,36 @@ export default class Game extends Service {
      * @public
      */
     public startGame() {
-        this.simulate();
-        this.RenderService.startRenderLoop();
+        document.addEventListener("visibilitychange", () => {
+            this.documentHidden = document.hidden;
+            if(!this.documentHidden) {
+                this.lastFrameTime = performance.now();
+                this.lastSimulationTime = performance.now();
+                this.simulationDeltaTime = 1/this.maxSimulationFramerate;
+            }
+        });
+
+        this.RenderService.canvasContext.frame(() => {
+            if(this.documentHidden) return;
+
+            const now = performance.now();
+            const delta = (now - this.lastFrameTime) / 1000;
+            this.deltaTime = delta;
+            this.lastFrameTime = now;
+            this.simulationAccumulator += delta;
+
+            const FIXED_DT = 1/this.maxSimulationFramerate;
+
+            while (this.simulationAccumulator >= FIXED_DT) {
+                this.simulate();
+                this.simulationDeltaTime = (now-this.lastSimulationTime)/1000;
+                this.simulationDeltaTime = Math.max(Math.min(this.simulationDeltaTime,FIXED_DT*2),FIXED_DT/2);
+                this.lastSimulationTime = performance.now();
+                this.simulationAccumulator -= FIXED_DT;
+            }
+
+            this.RenderService.render();
+        });
     }
 
     /**

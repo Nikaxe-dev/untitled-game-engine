@@ -51,6 +51,15 @@ export default class Instance {
     public simulate(game: Game, scene: Scene) {
         
     }
+
+    /**
+     * Runs before any Instance has been simulated.
+     * @param game The game the Instance is located under.
+     * @param scene The scene the Instance is located under.
+     */
+    public preSimulation(game: Game, scene: Scene) {
+
+    }
     
     /**
      * The Instances Parent, which is where it is located under in the Instance tree.

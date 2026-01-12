@@ -11,28 +11,26 @@ const game = new engine.GAME();
 
 const workspace = game.Workspace;
 const mainScene: Scene = workspace.Main as Scene;
+const camera = mainScene.camera;
 
-class PhysicsObject extends GameObject {
-    public simulate(game: Game, scene: Scene): void {
-        this.velocity.subtract(new Vector2(0,10));
-        super.simulate(game, scene);
-    }
-}
-
-const testGameObjectImage = new PhysicsObject();
+const testGameObjectImage = new GameObject();
 testGameObjectImage.name = "Image"
 testGameObjectImage.sprite = new Sprite(new ImageTexture("../../engine/content/textures/babyshoe.jpg", Color.WHITE));
 testGameObjectImage.parent = mainScene;
 
-const testGameObjectRect = new PhysicsObject();
-testGameObjectRect.name = "Rect";
-testGameObjectRect.position = new Vector2(0,0);
-testGameObjectRect.parent = mainScene;
+const testGameObjectImage2 = new GameObject();
+testGameObjectImage2.sprite = new Sprite(new ImageTexture("../../engine/content/textures/nikaxe.png", Color.WHITE));
+testGameObjectImage2.parent = mainScene;
+testGameObjectImage2.position = new Vector2(0, 500);
 
-game.gameSimulated.connect(() => {
-    console.log(`DeltaTime: ${game.deltaTime}`)
-});
+game.maxSimulationFramerate = 20;
 
-game.maxSimulationFramerate = 10;
+game.useRequestAnimationFrameForSimulation = true;
+
+camera?.simulated.connect(() => {
+    const time = performance.now();
+    //camera.position = new Vector2(Math.cos(time/1000)*500, Math.sin(time/1000)*500);
+    //camera.zoom = 1-Math.abs(Math.cos(time/250)+1)/8;
+})
 
 game.startGame();

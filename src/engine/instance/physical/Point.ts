@@ -26,8 +26,8 @@ export default class Point extends Instance {
     public simulate(game: Game, scene: Scene): void {
         super.simulate(game, scene);
         const velocityAdd = new Vector2(this.velocity.x, this.velocity.y);
-        if(this.simulationUseDeltatime && !isNaN(game.deltaTime)) {
-            velocityAdd.multiply(new Vector2(game.deltaTime));
+        if(this.simulationUseDeltatime && !isNaN(game.simulationDeltaTime)) {
+            velocityAdd.multiply(new Vector2(game.simulationDeltaTime));
         }
         if(this.simulationUseSimulationSpeed && !isNaN(game.deltaTime)) {
             velocityAdd.multiply(new Vector2(game.simulationSpeed));

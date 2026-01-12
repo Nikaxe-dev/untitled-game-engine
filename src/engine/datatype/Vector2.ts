@@ -1,3 +1,7 @@
+function numLerp(a: number, b: number, t: number) {
+    return a+(b-a)*t
+}
+
 /**
  * Represents a 2D position.
  */
@@ -144,5 +148,30 @@ export default class Vector2 {
     public toShaderVec2(screenSize: Vector2) {
         const vectorResult = this.divided(screenSize);
         return [vectorResult.x,vectorResult.y];
+    }
+
+    /**
+     * Linear interpolates towards the given vector.
+     * @param vector the vector to lerp towards
+     * @param alpha the interpolation factor
+     */
+    public lerp(vector: Vector2, alpha: number) {
+        this.x = numLerp(this.x, vector.x, alpha);
+        this.y = numLerp(this.y, vector.y, alpha);
+        return this;
+    }
+
+    /**
+     * Returns a new vector that is linear interpolated towards the given vector.
+     * @param vector the vector to lerp towards
+     * @param alpha the interpolation factor
+     * @returns A new vector instance.
+     */
+    public lerped(vector: Vector2, alpha: number) {
+        return new Vector2(numLerp(this.x, vector.x, alpha), numLerp(this.y, vector.y, alpha));
+    }
+
+    public clone() {
+        return new Vector2(this.x, this.y);
     }
 }

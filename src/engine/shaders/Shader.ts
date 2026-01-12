@@ -8,9 +8,11 @@
  * @uniform `objectPosition` : `vec2`, this is the position to offset the vertex by.
  * @uniform `objectSize` : `vec2`, multiply the vertexPositions by this before offsetting them.
  * @uniform `objectRotation` : `float`, the rotation of the object being rendered. (RADIANS)
+ * @uniform `time` : `float`, the time elasped since the creation of the REGL object.
  * 
  * @attribute `vertexPosition` : `vec2`, the relative position of the vertex.
  * @attribute `vertexUV` : `vec2`, the UV coordinates of the vertex.
+ * @attribute `vertexIndex` : `float` the index of the current vertex.
  */
 export default class Shader {
     /**
@@ -62,6 +64,7 @@ export default class Shader {
         uniform sampler2D texture;
         uniform vec4 objectColor;
         uniform int renderType;
+        uniform float time;
 
         varying vec2 vUV;
 
@@ -89,12 +92,15 @@ export default class Shader {
      */
     public static get vertexCode() { return `
         precision mediump float;
+
         attribute vec2 vertexPosition;
         attribute vec2 vertexUV;
+        attribute float vertexIndex;
 
         uniform vec2 objectPosition;
         uniform vec2 objectSize;
         uniform float objectRotation;
+        uniform float time;
 
         varying vec2 vUV;
 
