@@ -83,7 +83,11 @@ export class Game extends Service {
         return container.getDescendants().sort((a, b) => a.simOrder - b.simOrder);
     }
 
-    public getSceneOrder() {
+    public simulationGetSceneOrder() {
+        return (this.Workspace.getChildren().filter(c => c instanceof Scene) as Scene[]).sort((a, b) => a.simOrder - b.simOrder);
+    }
+
+    public renderingGetSceneOrder() {
         return (this.Workspace.getChildren().filter(c => c instanceof Scene) as Scene[]).sort((a, b) => a.layer - b.layer);
     }
 
@@ -93,7 +97,7 @@ export class Game extends Service {
      * @async
      */
     public async simulate() {
-        const sceneOrder = this.getSceneOrder();
+        const sceneOrder = this.simulationGetSceneOrder();
         sceneOrder.forEach((scene, index) => {
             const simulatable = this.getSimulatableDescendants(scene);
             simulatable.forEach((instance, index) => {

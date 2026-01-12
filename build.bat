@@ -26,3 +26,4 @@ echo RUNNING NODE BUILD SCRIPT
 node ./build.js
 echo RUNNING tsc --build
 call tsc --build
+echo BUILT PROJECT

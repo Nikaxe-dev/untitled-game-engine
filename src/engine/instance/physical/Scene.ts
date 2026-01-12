@@ -14,7 +14,8 @@ export class Scene extends Instance {
     public camera?: Camera;
     
     /**
-     * The layer of the scene, controlling the rendering and simulation order for every descendant of the Scene.
+     * The layer of the scene, controlling the rendering order for every descendant of the Scene.
+     * Does not change the order of simulation for the scene, use Instance.simOrder for this purpose.
      * @public
      */
     public layer: number = 0;

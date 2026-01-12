@@ -151,7 +151,7 @@ export class RenderService extends Service {
                 depth: 1
             });
 
-            const sceneOrder = (this.parent as Game).getSceneOrder();
+            const sceneOrder = (this.parent as Game).renderingGetSceneOrder();
             sceneOrder.forEach((scene, index) => {
                 if(scene.visibleInWorkspace) {
                     const renderable = this.getRenderableDescendants(scene);

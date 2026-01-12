@@ -33,4 +33,13 @@ camera?.simulated.connect(() => {
     camera.zoom = 1-Math.abs(Math.cos(time/250)+1)/8;
 })
 
+const scene2 = new Scene(workspace);
+scene2.layer = -100;
+
+const imagescene2 = new GameObject();
+imagescene2.sprite = new Sprite(new ImageTexture("../../engine/content/textures/babyshoe.jpg", Color.WHITE));
+imagescene2.size = new Vector2(250);
+imagescene2.position = new Vector2(250, 0)
+imagescene2.parent = scene2;
+
 game.startGame();
