@@ -15,7 +15,7 @@ For now, you can use the in-code documentation.
 ## How to use this
 
 ### Dependancies:
-* [TypeDoc](https://typedoc.org/) - for building the documentation (you can avoid this by running the build script with the flag `--noDocs` enabled.)
+* [TypeDoc](https://typedoc.org/) - for building the documentation (you can avoid this by running the build script with the flag `--noDocs`.)
 
 Clone the repository, remove all directories in `src` other than `engine`. Then create your game inside something like `src/game`.
 You can distribute the `/build` folder, although you might want to put an index page in it that redirects to the games page.
