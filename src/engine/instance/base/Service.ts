@@ -1,5 +1,5 @@
-import Game from "../service/Game.js";
-import Instance from "./Instance.js";
+import { Game } from "../service/Game.js";
+import { Instance } from "./Instance.js";
 
 /**
  * Service class, used for services.
@@ -7,7 +7,7 @@ import Instance from "./Instance.js";
  * 
  * @extends Instance
  */
-export default class Service extends Instance {
+export class Service extends Instance {
     protected set parent(newParent: Instance | null) {
         this.setParent(newParent);
     }

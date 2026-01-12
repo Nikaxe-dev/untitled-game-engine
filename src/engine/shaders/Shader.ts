@@ -14,7 +14,7 @@
  * @attribute `vertexUV` : `vec2`, the UV coordinates of the vertex.
  * @attribute `vertexIndex` : `float` the index of the current vertex.
  */
-export default class Shader {
+export class Shader {
     /**
      * Pushes items to an array and returns that array again.
      * @param array The array to push to.

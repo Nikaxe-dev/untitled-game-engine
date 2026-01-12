@@ -1,11 +1,11 @@
-import Shader from "../../shaders/Shader.js";
-import Color from "../Color.js";
-import Texture from "./Texture.js";
+import { Shader } from "../../shaders/Shader.js";
+import { Color } from "../Color.js";
+import { Texture } from "./Texture.js";
 
 /**
  * Describes an image to render.
  */
-export default class ImageTexture extends Texture {
+export class ImageTexture extends Texture {
     /**
      * The URL pointing to the image of the texture.
      * @public

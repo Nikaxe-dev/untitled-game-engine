@@ -1,9 +1,9 @@
-import Game from "./instance/service/Game.js";
+import { Game } from "./instance/service/Game.js";
 
 /**
  * The main engine class, storing public properties accessible from everywhere, along with certain other classes in the framework.
  */
-export default class engine {
+export class engine {
     /**
      * The name of the engine, this is here so it can be renamed at any point.
      * @public

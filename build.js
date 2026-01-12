@@ -1,5 +1,3 @@
-console.log("BUILDING PROJECT")
-
 const fs = require("fs")
 const path = require("path")
 
@@ -30,5 +28,3 @@ function applybuild(directory, origindir = directory) {
     })
 }
 applybuild(__dirname + "/build")
-
-console.log("BUILDING TYPESCRIPT CODE")

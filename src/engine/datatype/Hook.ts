@@ -1,4 +1,4 @@
-export class Connection {
+export class HookConnection {
     public hook?: Hook
     public isOnce: boolean = false
     public fire(...params: any[]) {}
@@ -13,15 +13,15 @@ export class Connection {
     }
 }
 
-export default class Hook {
-    public connections: Connection[] = []
+export class Hook {
+    public connections: HookConnection[] = []
     public fire(...params: any[]) {
         this.connections.forEach((value, index) => {
             value.fire(...params)
         })
     }
     public connect(fire: (...params: any[]) => undefined) {
-        const connection = new Connection(this, fire)
+        const connection = new HookConnection(this, fire)
         this.connections.push(connection)
         return connection
     }

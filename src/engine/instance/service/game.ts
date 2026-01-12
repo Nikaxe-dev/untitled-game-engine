@@ -1,11 +1,11 @@
-import Color from "../../datatype/Color.js";
-import Hook from "../../datatype/Hook.js";
+import { Color } from "../../datatype/Color.js";
+import { Hook } from "../../datatype/Hook.js";
 import { GAMESTOPREASON } from "../../Enum.js";
-import engine from "../../main.js";
-import Service from "../base/Service.js";
-import Scene from "../physical/Scene.js";
-import RenderService from "./RenderService.js";
-import Workspace from "./Workspace.js";
+import { engine } from "../../main.js";
+import { Service } from "../base/Service.js";
+import { Scene } from "../physical/Scene.js";
+import { RenderService } from "./RenderService.js";
+import { Workspace } from "./Workspace.js";
 
 interface REGLCancellable {
     cancel(): void;
@@ -14,7 +14,7 @@ interface REGLCancellable {
 /**
  * The Game, including every service and game-specific property.
  */
-export default class Game extends Service {
+export class Game extends Service {
     /**
      * The workspace, which contains all scenes, which in turn contain all physical instances.
      */

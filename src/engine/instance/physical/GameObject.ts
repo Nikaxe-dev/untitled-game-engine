@@ -1,20 +1,20 @@
-import Color from "../../datatype/Color.js";
-import Hook from "../../datatype/Hook.js";
-import Sprite from "../../datatype/Sprite.js";
-import ImageTexture from "../../datatype/texture/ImageTexture.js";
-import ShapeTexture from "../../datatype/texture/ShapeTexture.js";
-import Vector2 from "../../datatype/Vector2.js";
+import { Color } from "../../datatype/Color.js";
+import { Hook } from "../../datatype/Hook.js";
+import { Sprite } from "../../datatype/Sprite.js";
+import { ImageTexture } from "../../datatype/texture/ImageTexture.js";
+import { ShapeTexture } from "../../datatype/texture/ShapeTexture.js";
+import { Vector2 } from "../../datatype/Vector2.js";
 import { RENDERTYPE, SHAPE } from "../../Enum.js";
-import Game from "../service/Game.js";
-import RenderService from "../service/RenderService.js";
-import Point from "./Point.js";
-import Scene from "./Scene.js";
+import { Game } from "../service/Game.js";
+import { RenderService } from "../service/RenderService.js";
+import { Point } from "./Point.js";
+import { Scene } from "./Scene.js";
 
 function numLerp(a: number, b: number, t: number) {
     return a+(b-a)*t
 }
 
-export default class GameObject extends Point {
+export class GameObject extends Point {
     /**
      * The size of the GameObject.
      */

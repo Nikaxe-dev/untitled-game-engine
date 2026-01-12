@@ -1,8 +1,8 @@
-import Hook from "../../datatype/Hook.js";
-import Scene from "../physical/Scene.js";
-import Game from "../service/Game.js";
+import { Hook } from "../../datatype/Hook.js";
+import { Scene } from "../physical/Scene.js";
+import { Game } from "../service/Game.js";
 
-export default class Instance {
+export class Instance {
     /**
      * Your code editor couldnt find this, assume it is an Instance.
      */

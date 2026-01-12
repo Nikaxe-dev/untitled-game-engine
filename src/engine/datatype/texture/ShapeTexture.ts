@@ -1,12 +1,12 @@
 import { SHAPE } from "../../Enum.js";
-import Shader from "../../shaders/Shader.js";
-import Color from "../Color.js";
-import Texture from "./Texture.js";
+import { Shader } from "../../shaders/Shader.js";
+import { Color } from "../Color.js";
+import { Texture } from "./Texture.js";
 
 /**
  * Describes a shape to render, with a color.
  */
-export default class ShapeTexture extends Texture {
+export class ShapeTexture extends Texture {
     /**
      * The type of shape to render.
      */

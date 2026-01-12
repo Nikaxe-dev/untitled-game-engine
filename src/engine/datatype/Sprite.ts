@@ -1,9 +1,9 @@
-import Texture from "./texture/Texture.js";
+import { Texture } from "./texture/Texture.js";
 
 /**
  * Stores how a GameObject Instance is drawn.
  */
-export default class Sprite {
+export class Sprite {
     /**
      * The textures to draw in order.
      */

@@ -5,7 +5,7 @@ function numLerp(a: number, b: number, t: number) {
 /**
  * Represents a 2D position.
  */
-export default class Vector2 {
+export class Vector2 {
     public static get ZERO() {return new Vector2(0,0);};
     public static get ONE() {return new Vector2(1,1);};
     public static get TWO() {return new Vector2(2,2);};

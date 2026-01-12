@@ -1,12 +1,12 @@
-import Instance from "../base/Instance.js";
-import Game from "../service/Game.js";
-import Workspace from "../service/Workspace.js";
-import Camera from "./Camera.js";
+import { Instance } from "../base/Instance.js";
+import { Game } from "../service/Game.js";
+import { Workspace } from "../service/Workspace.js";
+import { Camera } from "./Camera.js";
 
 /**
  * Scenes are containers for GameObjects, located in 
  */
-export default class Scene extends Instance {
+export class Scene extends Instance {
     /**
      * The camera the scene will render from.
      * @public

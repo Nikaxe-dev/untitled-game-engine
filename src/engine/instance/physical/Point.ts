@@ -1,7 +1,7 @@
-import Vector2 from "../../datatype/Vector2.js";
-import Instance from "../base/Instance.js";
-import Game from "../service/Game.js";
-import Scene from "./Scene.js";
+import { Vector2 } from "../../datatype/Vector2.js";
+import { Instance } from "../base/Instance.js";
+import { Game } from "../service/Game.js";
+import { Scene } from "./Scene.js";
 
 /**
  * A Point in 2D Space with a Position and Velocity.
@@ -9,7 +9,7 @@ import Scene from "./Scene.js";
  * 
  * @extends Instance
  */
-export default class Point extends Instance {
+export class Point extends Instance {
     /**
      * The Vector2 position of the Point Instance.
      * 

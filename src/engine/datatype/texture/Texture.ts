@@ -1,9 +1,9 @@
-import Shader from "../../shaders/Shader.js";
+import { Shader } from "../../shaders/Shader.js";
 
 /**
  * Stores and loads how to render a texture.
  */
-export default class Texture {
+export class Texture {
     public shader: typeof Shader;
 
     constructor(shader: typeof Shader) {

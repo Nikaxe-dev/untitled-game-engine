@@ -1,12 +1,12 @@
 /**
  * A color, internally stored in RGBA.
  */
-export default class Color {
-    public static readonly WHITE = new Color(255,255,255);
-    public static readonly BLACK = new Color(0,0,0);
-    public static readonly RED = new Color(255,0,0);
-    public static readonly GREEN = new Color(0,255,0);
-    public static readonly BLUE = new Color(0,0,255);
+export class Color {
+    public static get WHITE() {return new Color(255,255,255)};
+    public static get BLACK() {return new Color(0,0,0)};
+    public static get RED() {return new Color(255,0,0)};
+    public static get GREEN() {return new Color(0,255,0)};
+    public static get BLUE() {return new Color(0,0,255)};
 
     public r: number = 0;
     public g: number = 0;

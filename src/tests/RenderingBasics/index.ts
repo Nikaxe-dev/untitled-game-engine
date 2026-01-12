@@ -1,11 +1,11 @@
-import Color from "../../engine/datatype/Color.js";
-import Sprite from "../../engine/datatype/Sprite.js";
-import ImageTexture from "../../engine/datatype/texture/ImageTexture.js";
-import Vector2 from "../../engine/datatype/Vector2.js";
-import GameObject from "../../engine/instance/physical/GameObject.js";
-import Scene from "../../engine/instance/physical/Scene.js";
-import Game from "../../engine/instance/service/Game.js";
-import engine from "../../engine/main.js";
+import { Color } from "../../engine/datatype/Color.js";
+import { Sprite } from "../../engine/datatype/Sprite.js";
+import { ImageTexture } from "../../engine/datatype/texture/ImageTexture.js";
+import { Vector2 } from "../../engine/datatype/Vector2.js";
+import { GameObject } from "../../engine/instance/physical/GameObject.js";
+import { Scene } from "../../engine/instance/physical/Scene.js";
+import { Game } from "../../engine/instance/service/Game.js";
+import { engine } from "../../engine/main.js";
 
 const game = new engine.GAME();
 

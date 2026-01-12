@@ -1,18 +1,18 @@
-import Color from "../../datatype/Color.js";
-import Hook from "../../datatype/Hook.js";
-import Vector2 from "../../datatype/Vector2.js";
+import { Color } from "../../datatype/Color.js";
+import { Hook } from "../../datatype/Hook.js";
+import { Vector2 } from "../../datatype/Vector2.js";
 import { GAMESTOPREASON } from "../../Enum.js";
 import { Texture2D } from "../../regl.js";
-import Shader from "../../shaders/Shader.js";
-import Service from "../base/Service.js";
-import GameObject from "../physical/GameObject.js";
-import Scene from "../physical/Scene.js";
-import Game from "./Game.js";
+import { Shader } from "../../shaders/Shader.js";
+import { Service } from "../base/Service.js";
+import { GameObject } from "../physical/GameObject.js";
+import { Scene } from "../physical/Scene.js";
+import { Game } from "./Game.js";
 
 /**
  * The RenderService, which controls rendering for the game.
  */
-export default class RenderService extends Service {
+export class RenderService extends Service {
     /**
      * The size of the page in your browser.
      * @public
