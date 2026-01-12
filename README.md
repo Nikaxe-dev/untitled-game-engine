@@ -1,5 +1,5 @@
 # untitled game engine
-<p align="left"><a href="https://nikaxe-dev.github.io/untitled-game-engine/docs">Documentation</a></p>
+<p align="left"><a href="https://nikaxe-dev.github.io/untitled-game-engine/docs" target="_blank">Documentation</a></p>
 
 ---
 
