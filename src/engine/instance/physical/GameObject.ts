@@ -63,7 +63,6 @@ export default class GameObject extends Point {
         const cameraPosition = scene.camera ? scene.camera.position : Vector2.ZERO;
         const cameraZoom = scene.camera ? scene.camera.zoom : 1
 
-        const cameraRelativeSize = this.size.multiplied(new Vector2(cameraZoom));
         const alpha = game.simulationAccumulator / (1/game.maxSimulationFramerate);
 
         const renderedCameraPosition = this.prevCameraPosition.lerped(cameraPosition, alpha);
@@ -72,6 +71,8 @@ export default class GameObject extends Point {
         const lerpedPosition = this.prevPosition.lerped(this.position, alpha);
         const renderPosition = lerpedPosition.subtracted(renderedCameraPosition).multiply(new Vector2(renderedCameraZoom));
 
+        const renderSize = this.size.multiplied(new Vector2(renderedCameraZoom));
+
         this.sprite.textureLayers.forEach((spriteTexture) => {
             const drawCommand = renderService.reglGetDrawCommand(spriteTexture.shader);
             if(spriteTexture instanceof ImageTexture) {
@@ -79,7 +80,7 @@ export default class GameObject extends Point {
                 drawCommand({
                     objectColor: spriteTexture.tintColor.shaderVec4,
                     objectPosition: renderPosition.toShaderVec2(renderService.screenSize),
-                    objectSize: cameraRelativeSize.toShaderVec2(renderService.screenSize),
+                    objectSize: renderSize.toShaderVec2(renderService.screenSize),
                     objectRotation: this.rotation,
                     renderType: RENDERTYPE.IMAGE,
                     texture: texture ? texture : texture404
@@ -89,7 +90,7 @@ export default class GameObject extends Point {
                     drawCommand({
                         objectColor: spriteTexture.color.shaderVec4,
                         objectPosition: renderPosition.toShaderVec2(renderService.screenSize),
-                        objectSize: cameraRelativeSize.toShaderVec2(renderService.screenSize),
+                        objectSize: renderSize.toShaderVec2(renderService.screenSize),
                         objectRotation: this.rotation,
                         renderType: RENDERTYPE.BOLD,
                         texture: texture404 // Use constant texture 404

@@ -23,14 +23,14 @@ testGameObjectImage2.sprite = new Sprite(new ImageTexture("../../engine/content/
 testGameObjectImage2.parent = mainScene;
 testGameObjectImage2.position = new Vector2(0, 500);
 
-game.maxSimulationFramerate = 20;
+game.maxSimulationFramerate = 120;
 
 game.useRequestAnimationFrameForSimulation = true;
 
 camera?.simulated.connect(() => {
     const time = performance.now();
     //camera.position = new Vector2(Math.cos(time/1000)*500, Math.sin(time/1000)*500);
-    //camera.zoom = 1-Math.abs(Math.cos(time/250)+1)/8;
+    camera.zoom = 1-Math.abs(Math.cos(time/250)+1)/8;
 })
 
 game.startGame();
