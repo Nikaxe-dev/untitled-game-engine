@@ -4,6 +4,7 @@ import { GAMESTOPREASON } from "../../Enum.js";
 import { engine } from "../../main.js";
 import { Service } from "../base/Service.js";
 import { Scene } from "../physical/Scene.js";
+import { InputService } from "./InputService.js";
 import { RenderService } from "./RenderService.js";
 import { Workspace } from "./Workspace.js";
 
@@ -24,6 +25,11 @@ export class Game extends Service {
      * The RenderService, which controls rendering for the game.
      */
     public RenderService: RenderService = new RenderService(this);
+    
+    /**
+     * The InputService, which is responsible for capturing user mouse and keyboard input.
+     */
+    public InputService: InputService = new InputService(this);
 
     /**
      * The name of the Game.

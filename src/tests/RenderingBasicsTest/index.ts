@@ -29,8 +29,8 @@ game.useRequestAnimationFrameForSimulation = true;
 
 camera?.simulated.connect(() => {
     const time = performance.now();
-    //camera.position = new Vector2(Math.cos(time/1000)*500, Math.sin(time/1000)*500);
-    camera.zoom = 1-Math.abs(Math.cos(time/250)+1)/8;
+    camera.position = new Vector2(Math.cos(time/1000)*500, Math.sin(time/1000)*500);
+    camera.zoom = 1-Math.abs(Math.cos(time/250)+1)*.05;
 })
 
 const scene2 = new Scene(workspace);
