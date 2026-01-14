@@ -111,6 +111,19 @@ export const KEYMAPPINGS: {[key: string]: KEYCODE} = {
     NumpadEqual: KEYCODE.KEYPADEQUALS,
 }
 
+export const SHIFTKEYMAPPINGS: {[key: string]: KEYCODE} = {
+    Digit1: KEYCODE.EXCLAMATION,
+    Digit2: KEYCODE.AT,
+    Digit3: KEYCODE.HASH,
+    Digit4: KEYCODE.DOLLAR,
+    Digit5: KEYCODE.PERCENT,
+    Digit6: KEYCODE.CARET,
+    Digit7: KEYCODE.AMBERSAND,
+    Digit8: KEYCODE.ASTERISK,
+    Digit9: KEYCODE.LEFTPARENTHESIS,
+    Digit0: KEYCODE.RIGHTPARENTHESIS
+}
+
 /**
  * A class designed to make managing inputs much easier by detecting multiple inputs at once.
  */
@@ -174,10 +187,15 @@ export class InputService extends Service {
         return inputHook;
     }
 
+    public SHIFT = this.registerInputHook([KEYCODE.LEFTSHIFT,KEYCODE.RIGHTSHIFT]);
+
     constructor(game: Game) {
         super(game);
         addEventListener("keydown", event => {
-            const keycode = KEYMAPPINGS[event.code];
+            let keycode = KEYMAPPINGS[event.code];
+            if(this.SHIFT.isDown && SHIFTKEYMAPPINGS[keycode]) {
+                keycode = SHIFTKEYMAPPINGS[keycode];
+            }
             if(keycode) {
                 this.keycodesDown.add(keycode);
             }
@@ -188,9 +206,9 @@ export class InputService extends Service {
             });
         });
         addEventListener("keyup", event => {
-            const keycode = KEYMAPPINGS[event.code];
-            if(keycode) {
-                this.keycodesDown.delete(keycode);
+            let keycode = KEYMAPPINGS[event.code];
+            if(this.SHIFT.isDown && SHIFTKEYMAPPINGS[keycode]) {
+                keycode = SHIFTKEYMAPPINGS[keycode];
             }
             this.inputHooks.forEach(hook => {
                 if(hook.keycodes.includes(keycode)) {
