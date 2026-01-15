@@ -44,6 +44,11 @@ export class Game extends Service {
      * @readonly
      */
     public readonly VERSION?: string;
+    
+    /**
+     * Controls whether game.simulationDeltaTime is a constant value.
+     */
+    public useConstantSimulationDeltatime: boolean = true;
 
     /**
      * The max framerate for the game.
@@ -68,7 +73,7 @@ export class Game extends Service {
      * The time the game took to execute the last frame. Usually, this does not include simulation, so do not use it in simulation code, instead use game.simulationDeltaTime.
      * @public
      */
-    public deltaTime: number = 0;
+    public frameDeltaTime: number = 0;
 
     /**
      * The time the game took to execute the last simulation. Do NOT use this for rendering code, this is for simulation and simulation only.
@@ -142,7 +147,7 @@ export class Game extends Service {
 
             const now = performance.now();
             const delta = (now - this.lastFrameTime) / 1000;
-            this.deltaTime = delta;
+            this.frameDeltaTime = delta;
             this.lastFrameTime = now;
             this.simulationAccumulator += delta;
 
@@ -154,6 +159,9 @@ export class Game extends Service {
                 this.simulationDeltaTime = Math.max(Math.min(this.simulationDeltaTime,FIXED_DT*2),FIXED_DT/2);
                 this.lastSimulationTime = performance.now();
                 this.simulationAccumulator -= FIXED_DT;
+                if(this.useConstantSimulationDeltatime) {
+                    this.simulationDeltaTime = FIXED_DT;
+                }
             }
 
             this.RenderService.render();

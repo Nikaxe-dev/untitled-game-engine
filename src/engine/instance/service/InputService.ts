@@ -1,8 +1,8 @@
-import { Hook } from "../../datatype/Hook";
-import { Vector2 } from "../../datatype/Vector2";
-import { KEYCODE } from "../../Enum";
-import { Service } from "../base/Service";
-import { Game } from "./Game";
+import { Hook } from "../../datatype/Hook.js";
+import { Vector2 } from "../../datatype/Vector2.js";
+import { KEYCODE } from "../../Enum.js";
+import { Service } from "../base/Service.js";
+import { Game } from "./Game.js";
 
 export const KEYMAPPINGS: {[key: string]: KEYCODE} = {
     KeyA: KEYCODE.A,
@@ -209,6 +209,9 @@ export class InputService extends Service {
             let keycode = KEYMAPPINGS[event.code];
             if(this.SHIFT.isDown && SHIFTKEYMAPPINGS[keycode]) {
                 keycode = SHIFTKEYMAPPINGS[keycode];
+            }
+            if(keycode) {
+                this.keycodesDown.delete(keycode);
             }
             this.inputHooks.forEach(hook => {
                 if(hook.keycodes.includes(keycode)) {

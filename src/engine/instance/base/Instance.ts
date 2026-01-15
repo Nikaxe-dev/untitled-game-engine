@@ -36,7 +36,7 @@ export class Instance {
     /**
      * Controls whether the built in simulate functions use game.deltaTime in their speed calculations.
      */
-    public simulationUseDeltatime: boolean = true;
+    public simulationUseDeltatime: boolean = false;
 
     /**
      * Controls whether the built in simulate functions use game.simulationSpeed in their speed calculations.
