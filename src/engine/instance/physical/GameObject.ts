@@ -21,6 +21,11 @@ export class GameObject extends Point {
     public size: Vector2 = new Vector2(100);
 
     /**
+     * The scale of the GameObject. Size is multiplied by this in the rendering code.
+     */
+    public scale: Vector2 = Vector2.ONE;
+
+    /**
      * The rotation of the GameObject (in radians).
      */
     public rotation: number = 0;
@@ -71,7 +76,7 @@ export class GameObject extends Point {
         const lerpedPosition = this.prevPosition.lerped(this.position, alpha);
         const renderPosition = lerpedPosition.subtracted(renderedCameraPosition).multiply(new Vector2(renderedCameraZoom));
 
-        const renderSize = this.size.multiplied(new Vector2(renderedCameraZoom));
+        const renderSize = this.size.multiplied(new Vector2(renderedCameraZoom)).multiply(this.scale);
 
         this.sprite.textureLayers.forEach((spriteTexture) => {
             const drawCommand = renderService.reglGetDrawCommand(spriteTexture.shader);
